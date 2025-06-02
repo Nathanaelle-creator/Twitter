@@ -1,0 +1,187 @@
+<?php
+session_start();
+
+$id = $_SESSION['id']; // L'ID de l'utilisateur connecté
+//var_dump($id);
+require_once '../../controllers/TweetController.php';
+require_once '../../controllers/RetweetController.php';
+
+
+$controller = new TweetController();
+$retweetController = new RetweetController();
+
+$followers = $controller->getFollowers();
+$Actionfollowers = $controller->FollowAction();
+$recupid = $controller->getuser(); 
+$result = null;
+
+// Si le formulaire est soumis, on traite la création du tweet
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['content'])) {
+         
+
+        $controller->create();
+    } elseif (isset($_POST['retweet'])) {
+        // var_dump($_POST);
+
+        $retweetController->createR();
+    }
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJET X</title>
+    <link rel="stylesheet" href="../../public/css/home.css">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <!-- Skeleton Loader -->
+    <div id="skeleton" class="layout">
+        <div class="layout__left-sidebar skeleton-box"></div>
+        <div class="layout__main skeleton-box"></div>
+        <div class="layout__right-container skeleton-box"></div>
+    </div>
+    <div id="content" class="layout hidden">
+        <!-- Left Sidebar -->
+        <div class="layout__left-sidebar">
+            <h2 style="margin-right:20px"></h2>
+            <img src="../../asset/twitter-logo.png" alt="Logo-twitter" id="toggle-button">
+            <h2 style="margin-left:20px;"></h2>
+            <div class="sidebar-menu">
+                <!-- <input type="text" placeholder="Search on X"> -->
+                <nav>
+                    <ul>
+                        <li><a href="../../views/user/home.php" class="text-primary">HOME</a></li>
+                        <li><a href="../../views/message/createView.php">MESSAGES</a></li>
+                        <li><a href="../../views/user/profilView.php">PROFILE</a></li>
+                        <li><a href="../../views/user/more.php">MORE</a></li>
+                    </ul>
+                </nav>
+                <button type="button" class="tweet" onclick="openModal('tweet')">TWEET</button>
+                <?php
+                //  username de l'utilisateur connecté
+                if (!empty($recupid)) {
+                    echo "<p><strong>@{$recupid['username']}</strong></p>";
+                } else {
+                    echo "<p>Aucun utilisateur trouvé.</p>";
+                }
+                ?>
+            </div>
+        </div>
+        <div class="layout__main">
+            <div class="flux">
+                <h4>Home</h4>
+                <div class="container-tweets">
+                    <h5>Quoi de neuf ?</h5>
+                    <div class="container-tweet">
+                    <form method="POST" action="home.php">
+                        <textarea name="content"  maxlength="140" placeholder="Contenu du tweet (max 140 caractères)" required></textarea>
+                        <input type="text" name="namehashtag" placeholder="Nom du hashtag">
+                        <input type="submit" id="send" value="Créer le tweet" name="submit_hastag">
+                    </form>
+                    </div>
+                </div>
+                <div class="mestweets">
+                <!-- <div class="tweet-wrapper">
+                    <?php
+                $tweetsAmis = $controller->TweetAmis();
+                ?>
+                </div> -->
+                <?php if (!empty($tweetsAmis)) : ?>
+                        <?php foreach ($tweetsAmis as $tweet) : ?>
+                            <div class="tweet-wrapper">
+                                <p><strong>@<?= htmlspecialchars($tweet['username']) ?></strong>:
+                                <?= htmlspecialchars($tweet['content']) ?>
+                                <br>
+                                <small><?= htmlspecialchars($tweet['creation_date']) ?></small> </p> 
+                                <form method="POST" action="home.php">
+                                    <input type="hidden" name="retweet" value="<?= $tweet['id'] ?>">
+                                    <button type="submit">🔁 Retweeter</button>
+                                </form>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p>Aucun tweet trouvé chez vos abonnements.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="layout__right-container">
+            <div class="layout__right-sidebar">
+                <!-- Right sidebar content -->
+                <form method="GET" action="home.php">
+    <input type="text" name="search" placeholder="Entrez un nom, prénom, username ou #hashtag" required>
+    <button type="submit">Rechercher</button>
+</form>
+
+<?php
+$resultsSearch = $controller->search();
+$hashtags= $controller->hastag();
+if (!empty($resultsSearch)): 
+?>
+    <h3>Résultats de la recherche :</h3>
+        <h4>Utilisateurs :</h4>
+        <ul>
+            <?php foreach ($resultsSearch as $user): ?>
+                <li><?= htmlspecialchars($user['firstname']) . " " . htmlspecialchars($user['lastname']) . " (@" . htmlspecialchars($user['username']) . ")" ?></li>
+            <?php endforeach; ?>
+            <?php foreach ($hashtags as $hashtag): ?>
+                <li>#<?= htmlspecialchars($hashtag['name']) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>Aucun résultat trouvé.</p>
+    <?php endif; ?>
+    <div>
+                    <?php
+                    if (!empty($followers)) {
+                        foreach ($followers as $follower) {
+                    ?>
+                            <a href="<?php echo "profilAmie.php?id=" . $follower['id']; ?>">
+                                <p><?php echo htmlspecialchars($follower['username']); ?></p>
+                            </a>
+                            <!-- Bouton Suivre / Ne plus suivre -->
+                            <form method="POST">
+                                <input type="hidden" name="getfollowedid" value="<?php echo $follower['id']; ?>">
+                                <button type="submit" name="follow_action">
+                                    <?php echo in_array($follower['id'], array_column($followers, 'id')) ? "Ne plus suivre" : "Suivre"; ?>
+                                </button>
+                            </form>
+                    <?php
+                        }
+                    }
+                    ?>
+                
+                    <?php
+                    
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+       let toggleSwitch = document.getElementById('toggle-button');
+toggleSwitch.addEventListener('click', (e) => {
+    let src = toggleSwitch.getAttribute('src');
+    if (src == '../../asset/TaupeProfil.png') {
+        toggleSwitch.src = '../../asset/twitter-logo.png"';
+        document.documentElement.setAttribute('data-theme', 'light');  
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleSwitch.src = '../../asset/TaupeProfil.png';
+    }
+});
+
+    </script>
+    <script src="/public/css/js/home.js"></script>
+    <script src="public/css/js/index.js"></script>
+</body>
+</html>

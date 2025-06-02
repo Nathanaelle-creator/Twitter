@@ -1,0 +1,236 @@
+/* Global Styles */
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f8fa;
+    color: #14171a;
+    display: flex;
+    height: 100vh;
+    background: #06002c;
+    
+}
+
+/* Layout Structure */
+.layout {
+    display: grid;
+    grid-template-columns: 400px 1fr 400px;
+    gap: 10px;
+    width: 100%;
+    color: white;
+}
+
+
+/* Sidebar Left */
+.layout__left-sidebar {
+    padding: 20px;
+    box-shadow: 0px 4px 4px rgba(238, 234, 234, 0.874);
+}
+
+.layout__left-sidebar img {
+    width: 50px;
+    margin-bottom: 20px;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+.sidebar-menu ul a {
+    text-decoration: none;
+}
+
+.sidebar-menu ul li a{
+    color: #1da1f2;
+}
+
+.sidebar-menu ul li {
+    padding: 20px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    color: white;
+}
+
+.sidebar-menu ul li:hover {
+    background-color: #e8f5fd;
+    color: #1da1f2;
+}
+
+.text-primary {
+    font-weight: bold;
+    color: #1da1f2;
+}
+
+/* Button Styles (All Buttons) */
+button, input[type="submit"] {
+    background-color: #1da1f2; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 30px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #0c85d0; /* Darker blue */
+}
+
+button.tweet {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Main Content */
+.layout__main {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(238, 234, 234, 0.874);
+}
+
+
+h4, h5 {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+textarea {
+    width: 70%;
+    height: 50px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: none;
+    
+}
+
+/* Right Sidebar */
+.layout__right-container {
+    background:  #06002c;
+    padding: 20px;
+    box-shadow: 0px 4px 4px rgba(238, 234, 234, 0.874);
+}
+
+.layout__right-sidebar {
+    background:  #06002c;
+    padding: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    list-style: none;
+}
+.layout__right-sidebar a {
+    text-decoration: none;
+}
+
+.layout__right-sidebar p {
+    color: white;
+    text-decoration: none;
+}
+.layout__right-sidebar p:hover {
+    color: #1da1f2;
+    text-decoration: none;
+}
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    
+}
+
+.container-tweet{
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    background-color:  #06002c;
+    box-shadow: 0px 4px 4px rgba(238, 234, 234, 0.874);
+   
+}
+.container-tweet input{
+    width: 40%;
+}
+
+.tweet-wrapper{
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    background-color:  #06002c;
+    box-shadow: 0px 4px 4px rgba(238, 234, 234, 0.874);
+    
+}
+/* Squelette (Loader) */
+.skeleton-box {
+   
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 8px;
+    height: 100%;
+}
+
+/* Cache le contenu principal au chargement */
+.hidden {
+    display: none;
+}
+
+/* Animation du squelette */
+@keyframes skeleton-loading {
+    from {
+        background-position: 200% 0;
+        background-color: #F5F5F5;
+    }
+    to {
+        background-position: -200% 0;
+        background-color: #E2E2E2;;
+    }
+}
+
+
+/* Mode sombre et claire */
+:root {
+    --bg-color: #06002c;
+    --text-color: #e0e0e0;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--bg-color); 
+    font-family: "Playfair Display";
+}
+
+[data-theme="dark"] {
+    --bg-color: #e0e0e0;
+    --text-color: black;
+
+}
+
+.layout,
+.layout__left-sidebar,
+.layout__main,
+.layout__right-container{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+.tweet-wrapper,
+.container-tweet,
+.layout__right-sidebar {
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+}
+
+.sidebar-menu ul li:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+

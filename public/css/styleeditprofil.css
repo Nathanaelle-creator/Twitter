@@ -1,0 +1,263 @@
+/* Global Styles */
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+p {
+  margin-top: 0px;
+}
+ 
+fieldset {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 20px;
+}
+ 
+legend {
+  padding: 0px 3px;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+ 
+label {
+  width: 110px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 6px;
+}
+
+body{
+  background-color: #06002c;
+  color: white;
+}
+
+button, input[type="submit"] {
+  background-color: #1da1f2; 
+  color: white; 
+  border: none;
+  border-radius: 30px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+.container{
+  padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(238, 234, 234, 0.874);
+}
+
+
+form{
+width: 100%;
+}
+
+.layout {
+  display: grid;
+  height: 100vh;
+  width: 100%;
+  grid-template-columns: 400px 1fr 400px;
+  color: white;
+}
+
+/* Sidebar Left */
+.layout__left-sidebar {
+  padding: 20px;
+  box-shadow: 0px 4px 4px rgba(238, 234, 234, 0.874);
+}
+
+.layout__left-sidebar img {
+  width: 50px;
+  margin-bottom: 20px;
+}
+
+.sidebar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+.sidebar-menu ul a {
+  text-decoration: none;
+}
+
+.sidebar-menu ul li a{
+  color: #1da1f2;
+}
+
+.sidebar-menu ul li {
+  padding: 20px 15px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: white;
+}
+
+.sidebar-menu ul li:hover {
+  background-color: #e8f5fd;
+  color: #1da1f2;
+}
+
+.text-primary {
+  font-weight: bold;
+  color: #1da1f2;
+}
+
+button.tweet {
+  width: 100%;
+  margin-top: 20px;
+}
+
+
+details {
+margin-bottom: 10px;
+border-radius: 5px;
+padding: 10px;
+transition: all 0.3s ease-in-out;
+}
+
+summary {
+font-size: 18px;
+width: 250px;
+font-weight: bold;
+cursor: pointer;
+padding: 10px;
+color: rgb(255, 255, 255);
+border-radius: 5px;
+display: flex;
+justify-content: center;
+}
+
+
+label {
+display: block;
+margin-top: 10px;
+font-weight: bold;
+}
+
+input, textarea {
+width: 100%;
+padding: 8px;
+margin-top: 5px;
+border-radius: 5px;
+}
+/* CSS pour l'accordéon */
+fieldset {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(238, 234, 234, 0.874);
+}
+
+.fieldset-title::after {
+  content: " (Cliquez pour modifier)";
+  font-size: 0.9em;
+  color: #888;
+  margin-left: 5px;
+  font-style: italic;
+}
+
+.fieldset-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fieldset-title::before {
+  content: "▶ ";
+  font-size: 1.2em;
+  margin-right: 5px;
+  transition: transform 0.3s;
+}
+
+.active .fieldset-title::before {
+  transform: rotate(90deg);
+}
+fieldset {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.fieldset-content {
+  display: none;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.fieldset-title {
+  font-weight: bold;
+}
+
+.active .fieldset-content {
+  display: block;
+}
+/* Squelette (Loader) */
+.skeleton-box {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 8px;
+  height: 100%;
+}
+
+/* Cache le contenu principal au chargement */
+.hidden {
+  display: none;
+}
+
+/* Animation du squelette */
+@keyframes skeleton-loading {
+  from {
+      background-position: 200% 0;
+  }
+  to {
+      background-position: -200% 0;
+  }
+}
+/* Mode sombre et claire */
+:root {
+  --bg-color: #06002c;
+   --text-color: #e0e0e0;
+}
+
+body {
+   color: var(--text-color);
+   background-color: var(--bg-color); 
+   font-family: "Playfair Display";
+}
+
+[data-theme="dark"] {
+   --bg-color: #e0e0e0;
+   --text-color: black;
+
+}
+
+.layout,
+.layout__left-sidebar,
+.layout__main,
+.layout__right-container{
+   background-color: var(--bg-color);
+   color: var(--text-color);
+}
+.tweet-wrapper,
+.container-tweet,
+.layout__right-sidebar {
+   background-color: var(--bg-color); 
+   color: var(--text-color); 
+}
+.layout__main p{
+   background-color: var(--bg-color); 
+   color: var(--text-color); 
+}
+.sidebar-menu ul li:hover {
+   background-color: var(--bg-color);
+   color: var(--text-color);
+}
+
+
